@@ -9,19 +9,24 @@ const client = new MongoClient(urlDB, {
       deprecationErrors: true,
     }
   });
+  
 
-
-async function run() {
+async function addUser(nombre, email, password) {
   try {
-    
     await client.connect();// Connect the client to the server
     const db = client.db("GuardianSecurityApp");
-    const collection = db.collection('user');
-    const insertResult = await collection.insertOne({ nombre: 'Thiago Vargas' , email: 'tv@test.com', password: "abc123" });
-    console.log(insertResult);
+    const userCollection = db.collection('user');
+
+    const usuario = { nombre, email, password }
+
+    const insertUser = await userCollection.insertOne({ usuario});
+    return insertUser // Retorna el usuario insertado
+   
   } finally {
     // Ensures that the client will close when you finish/error
-     client.close();
+     await client.close();
   }
 }
-run().catch(console.dir);
+addUser().catch(console.dir);
+
+module.exports = addUser();

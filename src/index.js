@@ -1,13 +1,12 @@
 const express = require('express')
 const cors = require('cors')
-const MongoClient = require('mongodb')
-const db = require('./dataBase/dataBase.js')
+const { MongoClient } = require('mongodb');
+const addUser = require('./dataBase/dataBase.js')
 
 const app = express()
 const port = 8080;
 
 app.use(cors())
-
 app.use(express.json())
 
 
@@ -17,36 +16,36 @@ app.get('/api/healthcheck', (req, res) => {
 })
 
 //Created-POST
-// app.post('/users', (req, res) => {
-//   try {
-//     const usuario = req.body
-//     res.status(201).json({message: "User created", data: usuario})
-//   } catch (error) {
-//     res.status(400).send(error);
-//   }
-// });
-
 app.post('/users', async (req, res) => {
+  console.log(req.body);
   try {
-    const user = req.body; // Recibir los datos del usuario desde el cuerpo de la solicitud
-    const result = collection.insertOne(user); // Insertar el usuario en la colección
-    res.status(201).json({ message: "User created", data: result}); // Enviar la respuesta con los datos del usuario creado
+    const { nombre, email, password } = req.body
+
+    if (!nombre || !email || !password) {
+      return res.status(400).json({ message: "Todos los campos son obligatorios" });
+    }
+    
+    const newUser = await db.addUser(nombre, email, password)
+    res.status(201).json({message: "User created", data: result})
+
+    console.log(newUser)
+
   } catch (error) {
-    res.status(400).send(error); // Manejar errores
+    res.status(400).send(error);
   }
 });
 
 
 //Read- GET
-app.get('/users', (req, res) => {
-  try{
-    const response = db.findAll();
-    console.log(response);
-    res.status(201).json({message: "Users found", data: response})
-  } catch (error) { 
-    res.status(400).json({message: error.message})
-  }
-})
+// app.get('/users', (req, res) => {
+//   try{
+//     const response = db.findAll();
+//     console.log(response);
+//     res.status(201).json({message: "Users found", data: response})
+//   } catch (error) { 
+//     res.status(400).json({message: error.message})
+//   }
+// })
 
 
 
