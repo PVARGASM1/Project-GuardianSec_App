@@ -1,56 +1,85 @@
-const express = require('express')
-const cors = require('cors')
-const db = require('mongodb')
+const express = require('express');
+const { connectDB } = require('../dataBase/dataBase'); 
+const { ObjectId } = require('mongodb');
 
+const router = express.Router();
 
-const app = express()
-const port = 8080;
+let userCollection;
 
-app.use(express.json()) //se puede recibir un body
-app.use(cors())
+connectDB().then(collection => {
+ userCollection = collection;
+});
 
-//CRUD
+router.get('/healthcheck', (req, res) => {
+  res.status(201).send("It's working");
+});
 
-//TEST
-app.get('/api/healthcheck', (req, res) => {
-    res.status(201).send("It's working");
-  });
-
-//Created-POST
-app.post('/user', (req, res) => {
+// Create (POST)
+router.post('/users', async (req, res) => {
   try {
-    const { body }  = req.body
-    const response = db.insertOne({...body})
-  
-    res.status(201).json({message: "User created", data: response})
-  } catch (error){
-    res.status(400).json({message: error.message})
+    const newUser = req.body;
+    await userCollection.insertOne(newUser);
+    res.status(201).json({message: "User created", data: newUser});
+  } catch (error) {
+    res.status(400).json({ error: 'Error al crear usuario' });
   }
-})
+});
 
-// //Read- GET
-// app.get('/users', (req, res) => {
-//   try{
-//     const response = db.findAll();
-//     console.log(response);
-//     res.status(201).json({message: "Users found", data: response})
-//   } catch (error) { 
-//     res.status(400).json({message: error.message})
-//   }
-// })
+// Read (GET)
+router.get('/users', async (req, res) => {
+  try {
+    const response = await userCollection.find({}).toArray();
+    res.status(201).json({message: "Users found", data: response});
+  } catch (error) {
+    res.status(400).json({message: error.message});
+  }
+});
 
-// //Update 
-// app.update('/users', (req, res) => {
-//   const body  = req.body
-//   console.log(body)
-// })
+// Read by ID (GET)
+router.get('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
 
-// //Delete
-// app.delete('/users', (req, res) => {
-//   const body  = req.body
-//   console.log(body)
-// })
+    if (!ObjectId.isValid(id)) {
+      return res.status(400).json({ error: 'ID no válido' });
+    }
 
-  app.listen(port, () => {
-    console.log(`It's server working ${port}`)
-  })
+    const user = await userCollection.findOne({ _id: new ObjectId(id) });
+
+    if (user) {
+      res.status(201).json({message: "User found", data: user});
+    } else {
+      res.status(404).json({message: "User not found"});
+    }
+  } catch (error) {
+    res.status(400).json({ error: 'Error al buscar el usuario' });
+  }
+});
+
+// Update (PUT)
+router.put('api/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedUser = req.body;
+    const result = await userCollection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updatedUser }
+    );
+    res.status(201).json({message: "User updated", data: updatedUser});
+  } catch (error) {
+    res.status(400).json({ error: 'Error al actualizar el usuario' });
+  }
+});
+
+// Delete (DELETE)
+router.delete('/users/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await userCollection.deleteOne({ _id: new ObjectId(id) });
+    res.status(201).json({message: "User deleted"});
+  } catch (error) {
+    res.status(400).json({ error: 'Error al eliminar el usuario' });
+  }
+});
+
+module.exports = router;
