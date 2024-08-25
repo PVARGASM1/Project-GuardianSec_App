@@ -1,4 +1,10 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom';
+import AboutUs from '../AboutUs'
+import Footer from '../Footer/index'
+import BannerHome from '../BannerHome'
+import ServicesHome from '../ServicesHome'
+
 import {
   Dialog,
   DialogPanel,
@@ -84,13 +90,13 @@ const Header = () => {
           <a href="/consulting" className="text-xl font-semibold leading text-white-900">
             Agendar Consultoria
           </a>
-          <a href="/register" className="text-xl font-semibold leading text-white-900">
+          <Link to="/register" className="text-xl font-semibold leading text-white-900">
             Registrate ahora
-          </a>
+          </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a href="#" className="text-xl font-semibold leading text-white-900">
-            Log in <span aria-hidden="true">&rarr;</span>
+             <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </nav>
@@ -151,19 +157,23 @@ const Header = () => {
                 </a>
 
               </div>
-              <div className="py-6">
-                <a
-                  href="/login"
-                  className="-mx-3 block rounded-base px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
-              </div>
+
             </div>
           </div>
         </DialogPanel>
       </Dialog>
+
+
+             
+      <AboutUs/>
+      <BannerHome/>
+      <ServicesHome/>
+      <Footer/>
     </header>
+
+    
+
+    
   )
 }
 
