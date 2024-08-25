@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import {
   Dialog,
@@ -14,37 +12,32 @@ import {
 } from '@headlessui/react'
 import {
   ArrowPathIcon,
-  Bars3Icon,
   ChartPieIcon,
   CursorArrowRaysIcon,
   FingerPrintIcon,
   SquaresPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { ChevronDownIcon} from '@heroicons/react/20/solid'
 
 const products = [
-  { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-  { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-  { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-  { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-]
-const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
+  { name: 'Instalación', description: 'Instalación de firewalls', href: '/services', icon: ChartPieIcon },
+  { name: 'Administración', description: 'Asesoria directa con nuestros clientes', href: '/services', icon: CursorArrowRaysIcon },
+  { name: 'Seguridad', description: 'Ciberseguridad para redes y aplicaciones', href: '/services', icon: FingerPrintIcon },
+  { name: 'Consultoria', description: 'Consultoria y asesoría de servicios de ciberseguridad', href: '/services', icon: SquaresPlusIcon },
+  { name: 'Asistencia', description: 'Migración de plataformas de seguridad', href: '/services', icon: ArrowPathIcon },
 ]
 
-export default function Example() {
+const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white">
-      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-        <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <img alt="" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" className="h-8 w-auto" />
+    <header className="bg-gray-800 text-white py-2">
+      <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-2 base:px-2">
+        <div className="flex lg:flex-1 p-1">
+          <a href="/home" className="-m-1.5 p-1.5">
+            <span className="sr-only">Guardian Security App</span>
+            <img alt="Logo" src="./public/LogoSinBack.png" className="h-18 w-auto" />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -53,21 +46,17 @@ export default function Example() {
             onClick={() => setMobileMenuOpen(true)}
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
           >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
+
           </button>
         </div>
-        <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+        <PopoverGroup className="hidden lg:flex lg:gap-x-4">
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              Product
+            <PopoverButton className="flex items-center gap-x-1 text-xl font-semibold leading text-white-900">
+              Servicios
               <ChevronDownIcon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
             </PopoverButton>
 
-            <PopoverPanel
-              transition
-              className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
-            >
+            <PopoverPanel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
               <div className="p-4">
                 {products.map((item) => (
                   <div
@@ -75,7 +64,7 @@ export default function Example() {
                     className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                   >
                     <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                      <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
+                      <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                     </div>
                     <div className="flex-auto">
                       <a href={item.href} className="block font-semibold text-gray-900">
@@ -87,37 +76,25 @@ export default function Example() {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-                {callsToAction.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
-                  >
-                    <item.icon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
-                    {item.name}
-                  </a>
-                ))}
-              </div>
+
             </PopoverPanel>
+
           </Popover>
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Features
+          <a href="/consulting" className="text-xl font-semibold leading text-white-900">
+            Agendar Consultoria
           </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Company
+          <a href="/register" className="text-xl font-semibold leading text-white-900">
+            Registrate ahora
           </a>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <a href="#" className="text-xl font-semibold leading text-white-900">
             Log in <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
       </nav>
+
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-10" />
         <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
@@ -126,7 +103,7 @@ export default function Example() {
               <span className="sr-only">Your Company</span>
               <img
                 alt=""
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src="./public/LogoSinBack.png"
                 className="h-8 w-auto"
               />
             </a>
@@ -148,7 +125,7 @@ export default function Example() {
                     <ChevronDownIcon aria-hidden="true" className="h-5 w-5 flex-none group-data-[open]:rotate-180" />
                   </DisclosureButton>
                   <DisclosurePanel className="mt-2 space-y-2">
-                    {[...products, ...callsToAction].map((item) => (
+                    {[...products].map((item) => (
                       <DisclosureButton
                         key={item.name}
                         as="a"
@@ -161,28 +138,23 @@ export default function Example() {
                   </DisclosurePanel>
                 </Disclosure>
                 <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  href="/consulting"
+                  className="-mx-3 block rounded-base px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Features
+                  Agendar consultoria
                 </a>
                 <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  href="/home"
+                  className="-mx-3 block rounded-base px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Marketplace
+                  Nuestra Compañia
                 </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a>
+
               </div>
               <div className="py-6">
                 <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  href="/login"
+                  className="-mx-3 block rounded-base px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   Log in
                 </a>
@@ -194,3 +166,5 @@ export default function Example() {
     </header>
   )
 }
+
+export default Header;
