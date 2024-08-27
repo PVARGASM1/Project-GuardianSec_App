@@ -15,7 +15,7 @@ connectDB().then(collection => {
 });
 
 
-app.get('/api/healthcheck', (req, res) => {
+app.get('/healthcheck', (req, res) => {
   res.status(201).send("It's working");
 })
 
@@ -30,6 +30,7 @@ app.post('/users', async (req, res) => {
     res.status(201).json({message: "User created", data: newUser});
     console.log(newUser)  
   } catch (error) {
+    console.log("error", error)
     res.status(400).json({ error: 'Error al crear usuario' });
   }
 });

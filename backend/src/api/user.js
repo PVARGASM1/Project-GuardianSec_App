@@ -6,8 +6,10 @@ const router = express.Router();
 
 let userCollection;
 
-connectDB().then(collection => {
- userCollection = collection;
+connectDB().then(collections => {
+  userCollection = collections.userCollection; // Accediendo correctamente a userCollection
+}).catch(error => {
+  console.error("Error al conectar con la base de datos", error);
 });
 
 router.get('/healthcheck', (req, res) => {
@@ -18,12 +20,15 @@ router.get('/healthcheck', (req, res) => {
 router.post('/users', async (req, res) => {
   try {
     const newUser = req.body;
-    await userCollection.insertOne(newUser);
+    await userCollection.insertOne(newUser); // Aquí se inserta el nuevo usuario
+
     res.status(201).json({message: "User created", data: newUser});
   } catch (error) {
+    console.log("error", error);
     res.status(400).json({ error: 'Error al crear usuario' });
   }
 });
+
 
 // Read (GET)
 router.get('/users', async (req, res) => {
