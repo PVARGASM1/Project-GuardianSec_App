@@ -1,0 +1,16 @@
+
+.card {
+    box-shadow: 0 1px 9px 3px #e4e4e4cf;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    margin: 0 auto;
+    background-color: #fff;
+  }
+  
+  
+  .background {
+    height: 1287px;
+    background-image: url('../../../public/background-login.jpg');
+    opacity: 0.9;
+  }
