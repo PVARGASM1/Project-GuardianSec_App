@@ -15,7 +15,7 @@ const Footer = () => {
         height={288}
       />
       </div>
-      <p className="text-sm text-gray-400">&copy; 2023 Guardian Security. All rights reserved.</p>
+      <p className="text-sm text-gray-400">&copy; 2024 Guardian Security. All rights reserved.</p>
       <div className="mt-4 flex space-x-4">
         <a href={'/'} className="text-gray-400 hover:text-white transition duration-300 ease-in-out">
           Home

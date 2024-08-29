@@ -1,10 +1,60 @@
+import { useState } from "react";
 
 
 const Consulting = () => {
+
+
+	const [data, setData] = useState({
+		name: "",
+		company: "",
+		email: "",
+		phone: "",
+		message: "",
+		services: "",
+	})
+
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		setData((data) => ({
+			...data,
+			[name]: value,
+		}));
+	};
+
+
+	const url = 'http://localhost:8080/consulting'
+
+	const handlerSubmitConsulting = async (e) => {
+		e.preventDefault();
+
+		try {
+			const fetchConsulting = {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(data)
+			}
+
+			const response = await fetch(`${url}`, fetchConsulting)
+			const consulting = await response.json()
+			console.log("consultoria", consulting)
+
+			if (response.ok) {
+        alert("Consultoria creada exitosamente");
+      } else {
+        alert(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      alert('Error al conectar con el servidor');
+    }
+	}
+
     return (
     <>
       <div>
 				<form
+					onSubmit={handlerSubmitConsulting}
 					className="m-10 p-8 border-2 rounded-lg ">
 					<div className="space-y-12 space-x-12 ">
 
@@ -34,8 +84,8 @@ const Consulting = () => {
 											name="company"
 											type="empresa"
 											placeholder=" Nombre empresa"
-											// value={data.company}
-											// onChange={handleInputChange}
+											value={data.company}
+											onChange={handleInputChange}
 											className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset 
                       ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 
                       sm:text-sm sm:leading-6"
@@ -54,8 +104,8 @@ const Consulting = () => {
 											id="name"
 											placeholder=" Nombre de contacto"
 											autoComplete="given-name"
-											// onChange={handleInputChange}
-											// value={data.name}
+											onChange={handleInputChange}
+											value={data.name}
 											className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset 
                       ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 
                       sm:text-sm sm:leading-6"
@@ -74,8 +124,8 @@ const Consulting = () => {
 											type="email"
 											placeholder=" email@test.com"
 											autoComplete="email"
-											// onChange={handleInputChange}
-											// value={data.email}
+											onChange={handleInputChange}
+											value={data.email}
 											className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                        placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 										/>
@@ -93,8 +143,8 @@ const Consulting = () => {
 											id="phone"
 											placeholder=" Teléfono"
 											autoComplete="telefono"
-											// onChange={handleInputChange}
-											// value={data.phone}
+											onChange={handleInputChange}
+											value={data.phone}
 											className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                        placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 										/>
@@ -117,8 +167,8 @@ const Consulting = () => {
 											className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                        placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 											defaultValue={''}
-											// onChange={handleInputChange}
-											// value={data.message}
+											onChange={handleInputChange}
+											value={data.message}
 										/>
 									</div>
 								</div>
@@ -133,8 +183,8 @@ const Consulting = () => {
 											id="services"
 											name="services"
 											autoComplete="services-name"
-											// onChange={handleInputChange}
-											// value={data.services}
+											onChange={handleInputChange}
+											value={data.services}
 											className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-base ring-1 ring-inset 
                       ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 
                       sm:text-sm sm:leading-6"
