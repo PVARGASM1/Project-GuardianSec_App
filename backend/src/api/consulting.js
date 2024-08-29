@@ -10,7 +10,7 @@ connectDB().then(collections => {
     consultingCollection = collections.consultingCollection;
   });
   
-  // Health check para asegurarse de que la ruta funciona
+
   router.get('/healthcheck', (req, res) => {
     res.status(201).send("Consulting route is working");
   });

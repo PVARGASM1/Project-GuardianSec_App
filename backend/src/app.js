@@ -8,10 +8,10 @@ const app = express();
 // setup Express:
 configExpress(app);
 
-// Configura las rutas de usuario
+//Ruta de usuario
 app.use('/', userRoutes);
 
-// Configura las rutas de consultarias
+//Ruta de consultarias
 app.use('/', consultingRoutes);
 
 module.exports = app;
